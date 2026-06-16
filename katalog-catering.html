@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berkah Rasa Catering — Daftar Menu & Harga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#F7EFE1;
+    --surface:#FFFDF8;
+    --ink:#2A1B12;
+    --chili:#C1432F;
+    --turmeric:#D89B2A;
+    --leaf:#4F6F4B;
+    --leaf-dark:#3A5237;
+    --line: rgba(42,27,18,0.12);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Plus Jakarta Sans', sans-serif;
+    line-height:1.5;
+  }
+
+  h1,h2,h3{ font-family:'Fraunces', serif; margin:0; }
+
+  a{ color:inherit; }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:var(--ink);
+    color:var(--ivory);
+    padding:14px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:1.25rem;
+    letter-spacing:0.2px;
+  }
+  .brand-mark{
+    width:34px; height:34px;
+    border-radius:50%;
+    background:var(--turmeric);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.1rem;
+  }
+  nav{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+  }
+  nav a{
+    text-decoration:none;
+    font-size:0.85rem;
+    font-weight:600;
+    padding:8px 14px;
+    border-radius:999px;
+    color:rgba(247,239,225,0.85);
+    transition:background 0.2s, color 0.2s;
+  }
+  nav a:hover, nav a:focus-visible{
+    background:var(--turmeric);
+    color:var(--ink);
+  }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--turmeric);
+    outline-offset:3px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:64px 24px 56px;
+    text-align:center;
+    overflow:hidden;
+    background:
+      repeating-linear-gradient(135deg, rgba(79,111,75,0.06) 0 14px, transparent 14px 28px),
+      var(--ivory);
+    border-bottom:1px solid var(--line);
+  }
+  .hero-eyebrow{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--leaf-dark);
+    background:rgba(79,111,75,0.12);
+    padding:6px 14px;
+    border-radius:999px;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 5vw, 3.4rem);
+    font-weight:700;
+    max-width:780px;
+    margin:0 auto 14px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--chili);
+  }
+  .hero p{
+    max-width:560px;
+    margin:0 auto 28px;
+    color:rgba(42,27,18,0.72);
+    font-size:1.02rem;
+  }
+  .hero-actions{
+    display:flex;
+    gap:14px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 24px;
+    border-radius:10px;
+    font-weight:600;
+    font-size:0.95rem;
+    text-decoration:none;
+    border:1.5px solid transparent;
+    cursor:pointer;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{
+    background:var(--chili);
+    color:var(--ivory);
+    box-shadow:0 6px 0 rgba(42,27,18,0.15);
+  }
+  .btn-ghost{
+    background:transparent;
+    border-color:var(--ink);
+    color:var(--ink);
+  }
+
+  /* ---------- CATEGORY TABS ---------- */
+  .tabbar{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    padding:22px 16px;
+    background:var(--surface);
+    border-bottom:1px solid var(--line);
+    position:sticky;
+    top:64px;
+    z-index:40;
+  }
+  .tab{
+    text-decoration:none;
+    font-size:0.85rem;
+    font-weight:600;
+    color:var(--ink);
+    padding:9px 16px;
+    border-radius:999px;
+    border:1.5px solid var(--line);
+    transition:border-color 0.2s, background 0.2s;
+  }
+  .tab:hover, .tab:focus-visible{
+    border-color:var(--turmeric);
+    background:rgba(216,155,42,0.14);
+  }
+
+  /* ---------- SECTIONS ---------- */
+  .section{
+    max-width:1080px;
+    margin:0 auto;
+    padding:64px 24px 12px;
+    scroll-margin-top:130px;
+  }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:8px;
+    border-bottom:2px solid var(--leaf);
+    padding-bottom:14px;
+  }
+  .section-head h2{
+    font-size:1.8rem;
+    font-weight:600;
+  }
+  .section-note{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    color:var(--leaf-dark);
+    white-space:nowrap;
+  }
+  .section-sub{
+    margin:14px 0 30px;
+    color:rgba(42,27,18,0.68);
+    max-width:620px;
+  }
+
+  /* ---------- GRID & CARD ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+    gap:22px;
+    margin-bottom:8px;
+  }
+  .card{
+    background:var(--surface);
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    box-shadow:0 2px 0 rgba(42,27,18,0.04);
+    display:flex;
+    flex-direction:column;
+    position:relative;
+  }
+  .photo{
+    height:150px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:2.6rem;
+    position:relative;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.12) 0 10px, transparent 10px 20px);
+  }
+  .photo span{ filter:drop-shadow(0 3px 4px rgba(0,0,0,0.18)); }
+  .photo-note{
+    position:absolute;
+    bottom:6px;
+    right:8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.62rem;
+    color:rgba(255,255,255,0.75);
+    background:rgba(0,0,0,0.22);
+    padding:2px 6px;
+    border-radius:4px;
+  }
+  .card-body{
+    padding:18px 18px 22px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+  }
+  .card-body h3{
+    font-size:1.08rem;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .card-body p{
+    font-size:0.86rem;
+    color:rgba(42,27,18,0.66);
+    margin:0 0 16px;
+    flex:1;
+  }
+
+  /* price tag — signature element, like a string-tied market price tag */
+  .price-tag{
+    align-self:flex-start;
+    position:relative;
+    background:var(--chili);
+    color:var(--ivory);
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:500;
+    font-size:0.92rem;
+    padding:7px 16px 7px 22px;
+    border-radius:3px 8px 8px 3px;
+    transform:rotate(-2deg);
+  }
+  .price-tag::before{
+    content:"";
+    position:absolute;
+    left:7px; top:50%;
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--ivory);
+    transform:translateY(-50%);
+    box-shadow:0 0 0 1.5px var(--chili) inset;
+  }
+  .price-tag::after{
+    content:"";
+    position:absolute;
+    left:-14px; top:50%;
+    width:14px; height:1px;
+    background:rgba(42,27,18,0.4);
+    transform:translateY(-50%) rotate(8deg);
+  }
+
+  /* ---------- INFO BANNER ---------- */
+  .banner{
+    max-width:1080px;
+    margin:48px auto 0;
+    padding:18px 24px;
+    background:rgba(79,111,75,0.1);
+    border:1px solid rgba(79,111,75,0.3);
+    border-radius:12px;
+    font-size:0.88rem;
+    color:var(--leaf-dark);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    margin-top:70px;
+    background:var(--ink);
+    color:rgba(247,239,225,0.85);
+    padding:40px 24px 32px;
+    text-align:center;
+  }
+  footer h3{
+    color:var(--ivory);
+    font-size:1.3rem;
+    margin-bottom:8px;
+  }
+  footer p{ font-size:0.88rem; margin:0 0 20px; color:rgba(247,239,225,0.65); }
+  footer .meta{
+    margin-top:24px;
+    font-size:0.74rem;
+    color:rgba(247,239,225,0.4);
+  }
+
+  /* ---------- FLOATING WHATSAPP BUTTON ---------- */
+  .wa-float{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    background:var(--leaf);
+    color:#fff;
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.5rem;
+    text-decoration:none;
+    box-shadow:0 8px 18px rgba(0,0,0,0.25);
+    z-index:60;
+    transition:transform 0.15s ease;
+  }
+  .wa-float:hover{ transform:scale(1.08); }
+
+  @media (max-width:600px){
+    .tabbar{ top:0; }
+    header{ position:static; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><span class="brand-mark">🍃</span> <!-- GANTI: nama usaha --> Berkah Rasa Catering</div>
+  <nav>
+    <a href="#nasi-box">Nasi Box</a>
+    <a href="#snack">Snack &amp; Kue</a>
+    <a href="#tumpeng">Tumpeng</a>
+    <a href="#prasmanan">Prasmanan</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <span class="hero-eyebrow">Daftar Menu &amp; Harga</span>
+  <h1>Masakan rumahan untuk <em>setiap acara</em>, dari rapat kantor sampai hajatan keluarga.</h1>
+  <p><!-- GANTI: deskripsi singkat usaha --> Dimasak fresh setiap hari dari bahan pilihan. Cocok untuk nasi box harian, snack rapat, tumpeng syukuran, hingga prasmanan acara besar.</p>
+  <div class="hero-actions">
+    <a href="#nasi-box" class="btn btn-primary">Lihat Menu</a>
+    <a href="https://wa.me/6281234567890" class="btn btn-ghost" target="_blank" rel="noopener">Pesan via WhatsApp</a>
+  </div>
+</section>
+
+<div class="tabbar">
+  <a class="tab" href="#nasi-box">📦 Nasi Box</a>
+  <a class="tab" href="#snack">🍪 Snack &amp; Kue</a>
+  <a class="tab" href="#tumpeng">🌾 Tumpeng &amp; Nasi Kuning</a>
+  <a class="tab" href="#prasmanan">🍽️ Prasmanan Acara</a>
+</div>
+
+<!-- ===================== NASI BOX ===================== -->
+<section class="section" id="nasi-box">
+  <div class="section-head">
+    <h2>Nasi Box</h2>
+    <span class="section-note">min. 5 box / pesanan</span>
+  </div>
+  <p class="section-sub">Pilihan harian untuk makan siang kantor, rapat, atau acara kecil.</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="photo" style="background-color:#D89B2A;"><span>🍗</span><span class="photo-note">foto menu</span></div>
+      <div class="card-body">
+        <h3>Nasi Box Ayam Geprek</h3>
+        <p>Nasi putih, ayam geprek sambal bawang, lalapan segar, kerupuk.</p>
+        <span class="price-tag">Rp 25.000</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo" style="background-color:#8C5A33;"><span>🍛</span><span class="photo-note">foto menu</span></div>
+      <div class="card-body">
+        <h3>Nasi Box Rendang Sapi</h3>
+        <p>Nasi putih, rendang sapi empuk, telur balado, kerupuk.</p>
+        <span class="price-tag">Rp 32.000</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo" style="background-color:#C1432F;"><span>🐟</span><span class="photo-note">foto menu</span></div>
+      <div class="card-body">
+        <h3>Nasi Box Ikan Bakar</h3>
+        <p>Nasi putih, ikan bakar bumbu kecap, lalapan, sambal terasi.</p>
+        <span class="price-tag">Rp 28.000</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo" style="background-color:#4F6F4B;"><span>🥗</span><span class="photo-note">foto menu</span></div>
+      <div class="card-body">
+        <h3>Nasi Box Vegetarian</h3>
+        <p>Nasi putih, tahu tempe bacem, sayur lodeh, kerupuk.</p>
+        <span class="price-tag">Rp 20.000</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== SNACK & KUE ===================== -->
+<section class="section" id="snack">
+  <div class="section-head">
+    <h2>Snack &amp; Kue</h2>
+    <span class="section-note">min. 10 box / pesanan</span>
+  </div>
+  <p class="section-sub">Untuk coffee break, rapat, atau oleh-oleh acara.</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="photo" style="background-color:#D89B2A;"><span>🥟</span><span class="photo-note">foto menu</span></div>
+      <div class="card-body">
+        <h3>Snack Box Standar</h3>
+        <p>Risoles, lemper, kue lapis, air mineral.</p>
+        <span class="price-tag">Rp 12.000</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo" style="background-color:#C1432F;"><span>🧁</span><span class="photo-note">foto menu</span></div>
+      <div class="card-body">
+        <h3>Snack Box Premium</h3>
+        <p>Pastel, bolu kukus, klepon, teh atau kopi kemasan.</p>
+        <span class="price-tag">Rp 18.000</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo" style="background-color:#4F6F4B;"><span>🍪</span><span class="photo-note">foto menu</span></div>
+      <div class="card-body">
+        <h3>Kue Kering per Toples</h3>
+        <p>Nastar, kastengel, putri salju — campur sesuai selera.</p>
+        <span class="price-tag">Rp 65.000</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== TUMPENG ===================== -->
+<section class="section" id="tumpeng">
+  <div class="section-head">
+    <h2>Tumpeng &amp; Nasi Kuning</h2>
+    <span class="section-note">pre-order 1 hari</span>
+  </div>
+  <p class="section-sub">Untuk syukuran, ulang tahun, dan acara keluarga.</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="photo" style="background-color:#D89B2A;"><span>🌾</span><span class="photo-note">foto menu</span></div>
+      <div class="card-body">
+        <h3>Tumpeng Mini (5–7 orang)</h3>
+        <p>Nasi kuning, ayam goreng, telur balado, perkedel, sambal goreng kentang.</p>
+        <span class="price-tag">Rp 250.000</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo" style="background-color:#C1432F;"><span>🎉</span><span class="photo-note">foto menu</span></div>
+      <div class="card-body">
+        <h3>Tumpeng Lengkap (15–20 orang)</h3>
+        <p>Nasi kuning dengan 8 jenis lauk pelengkap, cocok untuk acara besar.</p>
+        <span class="price-tag">Rp 650.000</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo" style="background-color:#8C5A33;"><span>📦</span><span class="photo-note">foto menu</span></div>
+      <div class="card-body">
+        <h3>Nasi Kuning Box</h3>
+        <p>Porsi individu, cocok untuk pembagian per tamu.</p>
+        <span class="price-tag">Rp 22.000</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== PRASMANAN ===================== -->
+<section class="section" id="prasmanan">
+  <div class="section-head">
+    <h2>Prasmanan Acara</h2>
+    <span class="section-note">min. 50 porsi</span>
+  </div>
+  <p class="section-sub">Untuk pernikahan, ulang tahun, dan acara kantor skala besar. Harga per porsi.</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="photo" style="background-color:#4F6F4B;"><span>🍚</span><span class="photo-note">foto menu</span></div>
+      <div class="card-body">
+        <h3>Paket Hemat</h3>
+        <p>Nasi, 2 lauk, sayur, sambal, kerupuk.</p>
+        <span class="price-tag">Rp 28.000</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo" style="background-color:#D89B2A;"><span>🍲</span><span class="photo-note">foto menu</span></div>
+      <div class="card-body">
+        <h3>Paket Lengkap</h3>
+        <p>Nasi, 3 lauk, sayur, sambal, buah, kerupuk.</p>
+        <span class="price-tag">Rp 38.000</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo" style="background-color:#C1432F;"><span>🍱</span><span class="photo-note">foto menu</span></div>
+      <div class="card-body">
+        <h3>Paket Mewah</h3>
+        <p>Nasi, 4 lauk premium, sup, sayur, buah, dessert.</p>
+        <span class="price-tag">Rp 50.000</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="banner">
+    Harga berlaku untuk wilayah <!-- GANTI: area layanan --> Surakarta &amp; sekitarnya, dan dapat berubah sesuai jarak pengiriman serta jumlah pesanan. Minimal pemesanan H-1 untuk nasi box, H-3 untuk tumpeng dan prasmanan.
+  </div>
+</section>
+
+<footer>
+  <h3>Pesan Sekarang</h3>
+  <p><!-- GANTI: nomor & alamat --> WhatsApp 0812-3456-7890 &nbsp;•&nbsp; Jl. Contoh No. 10, Surakarta</p>
+  <a href="https://wa.me/6281234567890" class="btn btn-primary" target="_blank" rel="noopener">Chat WhatsApp</a>
+  <div class="meta">© 2026 Berkah Rasa Catering. Harga sewaktu-waktu dapat berubah.</div>
+</footer>
+
+<a href="https://wa.me/6281234567890" class="wa-float" target="_blank" rel="noopener" aria-label="Pesan via WhatsApp">💬</a>
+
+</body>
+</html>
